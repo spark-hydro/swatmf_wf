@@ -1324,7 +1324,7 @@ def output_std_plot(axes, dff, viz_ts, widthExg=1, cutcolor='k'):
     #                 })
     # plt.subplots_adjust(left=0.06, right=0.98, top=0.83, bottom=0.05)
     width = -20
-    dff = dff.resample("M").mean()
+    dff = dff.resample("ME").mean()
     # == Precipitation ============================================================
     axes[0].bar(
         dff.index, dff.prec, width * widthExg,
@@ -1941,7 +1941,7 @@ def single_fdc(df):
     # ax.set_ylabel(r"Flow rate $[m^3/s]$", fontsize=12)
     ax.margins(0.01)
     # ax.tick_params(axis='both', labelsize=12)
-    # plt.legend(fontsize=12, loc="lower left")
+    plt.legend(fontsize=12, loc="lower left")
     # ax.text(
     #     1, 0.8, f'rel{rel_idx}', fontsize=10,
     #     horizontalalignment='right',
@@ -2004,7 +2004,7 @@ def plot_violin(wd, df):
     ax.spines['right'].set_visible(False)
     # ax.spines['bottom'].set_visible(False)
     plt.tight_layout()
-    ax.set_ylabel('CH$_4$ emission $(g\;CH_{4}-C\; m^{-2}\cdot d^{-1})$', fontsize=14)
+    ax.set_ylabel(r'CH$_4$ emission $(g\;CH_{4}-C\; m^{-2}\cdot d^{-1})$', fontsize=14)
     plt.savefig(os.path.join(wd, 'viloin_plot.png'), dpi=300, bbox_inches="tight")
     plt.show()
 
