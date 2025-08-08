@@ -936,6 +936,20 @@ def adjust_weight(wd, obs_file, obgnme, threshold, adj_perc):
     df.to_csv(os.path.join(wd, obs_file), index=False)
     print(' >>> done')
 
+def adjust_weight2(wd, obs_file, obgnme, adj_perc):
+    df = pd.read_csv(os.path.join(wd, obs_file))
+    # df["obgnme"] = np.where(
+    #     (df['obsval'] < threshold) & (df["obgnme"]==obgnme),
+    #     obgnme+"_base", df["obgnme"])
+    df["weight_adj"] = np.where(
+        (df["obgnme"]==obgnme+"_base"),
+        df["weight"] + (df["weight"]*adj_perc/100), 
+        df["weight"]
+        )
+    df.to_csv(os.path.join(wd, obs_file), index=False)
+    print(' >>> done')
+
+
 
 def add_obs_group(wd, obs_file, obgnme, threshold, suffix):
     df = pd.read_csv(os.path.join(wd, obs_file))
@@ -974,10 +988,12 @@ if __name__ == '__main__':
     base_par = "gumu_pp_rw.30.par"
     update_pars(pst_file, wd, iter_num, base_par=base_par)
     '''
-    wd = "D:\\spark\\koksilah\\7th\\koki_7th_base"
-    obs_file = "koki_zon.obs_data.csv"
-    obgnme = "sub03"
-    threshold = 0.2
-    suffix = "base"
-    add_obs_group(wd, obs_file, obgnme, threshold, suffix)
+    wd = "D:\\Projects\\Watersheds\\Koksilah\\analysis\\afterservice\\Re-calibration"
+    obs_file = "koki_zon_rw_ies.obs_data.csv"
+    # obgnme = "sub03"
+    # threshold = 5.0
+    # suffix = "base"
+    # add_obs_group(wd, obs_file, obgnme, threshold, suffix)
+    adjust_weight2(wd, obs_file, "sub03", 50)
+
 

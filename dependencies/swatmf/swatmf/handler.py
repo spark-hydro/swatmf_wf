@@ -145,6 +145,7 @@ class SWATMFout(object):
             (dtw_st_df['date'] <= self.eddate_warmup.date())
             )
         dtw_st_df = dtw_st_df.loc[mask]
+        print(dtw_st_df)
 
         with open("dtw_sim_static.txt", "w") as wf:
             wf.write("# static gw function alpha version ...\n")
@@ -158,7 +159,24 @@ class SWATMFout(object):
                 dtwst_sim, g, l = self.load_sim_dtw_file(grid_id, layer, date)
                 newline = f"{g:7d}{l:5d}{date:>14s}{st_dtw:14.4e}{dtwst_sim:14.4e}\n"
                 wf.write(newline)
-        print(f" {'>'*3} {'dtw_sim_static.txt'}" + " file file has been created...")    
+        print(f" {'>'*3} {'dtw_sim_static.txt'}" + " file file has been created...")
+
+    def read_static_gw(self):
+        """Read static groundwater data from a file, 'dtw_sim_static.txt', and return a DataFrame.
+        
+        """
+        dtw_st_df = pd.read_csv(
+            "dtw_sim_static.txt",
+            sep=r'\s+',
+            header=0,
+            names=["grid_id", "layer", "date", "obd", "sim"],
+            comment="#",
+            # parse_dates=["date"]
+        )
+        # dtw_st_df.set_index("date", inplace=True)
+        # dtw_st_df.index = pd.to_datetime(dtw_st_df.index).date
+        return dtw_st_df
+
 
     def load_sim_dtw_file(self, grid_id, layer, date):
         # print(date)

@@ -763,6 +763,14 @@ def dtw_1to1_plot(df):
 
 
 def dtw_1to1_plot_(df):
+    """Plot 1:1 scatter plot of simulated vs observed groundwater head
+    used in Kokisilah model report
+    Args:
+        df (DataFrame): DataFrame containing columns 'sim', 'obd', 'grid_id', 'layer', and 'date'.
+    Returns:
+        None: Displays the plot.
+    """
+
     groups = df.groupby('grid_id')
     fig, ax = plt.subplots(
                     figsize=(6,5)
@@ -2102,4 +2110,16 @@ class Paddy(Paddy):
 '''
     
 
+# def plot_tot():
+if __name__ == '__main__':
+    ###
+    # wd = "D:\\Projects\\Watersheds\\Koksilah\\analysis\\afterservice\\Re-calibration\\koki_rw_ies"
+    # pst_file = "koki_zon_rw_ies.pst"
+    # iter_idx = 8
 
+    # mout = handler.SWATMFout(wd)
+    # dtwdf = mout.get_static_gw()
+    # print(dtwdf)
+    ###
+    wd = "D:\\Projects\\Watersheds\\Koksilah\\analysis\\afterservice\\Re-calibration\\koki_rw_ies_20250805\\koki_rw_ies"
+    create_rels_objs(wd, "koki_zon_rw_ies.pst", iter_idx=10)
